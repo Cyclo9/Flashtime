@@ -7,7 +7,7 @@ from pygame.locals import *
 pygame.init()
 
 clock = pygame.time.Clock()
-FPS = 500
+FPS = 400
 
 """ SET UP """
 
@@ -15,14 +15,30 @@ FPS = 500
 win = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Flashtime!")
 
-# Variables
+""" VARIABLES """
+
+# Orb Position
 orb_x = 250
 orb_y = 250
 
+# Background Image
+bgImg = pygame.image.load("lib/img/background.png")
+
+
 """ FUNCTIONS """
 
+# Drawings
+
+# The Orb - It represents a little Time Orb
 def drawOrb():
     pygame.draw.circle(win, (0, 255, 255), (orb_x, orb_y), 25)
+
+# Doors
+def drawDoors():
+    pygame.draw.rect(win, (139, 69, 19), (0, 200, 16, 100))
+    pygame.draw.rect(win, (139, 69, 19), (200, 0, 100, 16))
+    pygame.draw.rect(win, (139, 69, 19), (484, 200, 16, 100))
+    pygame.draw.rect(win, (139, 69, 19), (200, 484, 100, 16))
 
 """ MAIN LOOP """
 
@@ -45,10 +61,14 @@ while status:
     """ OBJECT CREATION """
 
     # Removes remanants of drawings
-    win.fill((0, 0, 0))
-
+    win.blit(bgImg, (0, 0))
+    # win.fill((0, 0, 0)) # <-- Backup
+ 
     # Creats Blue Orb --> Main Player
     drawOrb()
+
+    # Draws doors
+    drawDoors()
 
     # Velocities for moving objects
     orbVel = 1
@@ -66,14 +86,15 @@ while status:
 
     """ BOUNDARIES """
 
-    if orb_x > 450:
-        orb_x = 450
-    if orb_x < 0:
-        orb_x = 0
-    if orb_y > 450:
-        orb_y = 450
-    if orb_y < 0:
-        orb_y = 0
+    # Wall Boundaries
+    if orb_x > 459:
+        orb_x = 459
+    if orb_x < 41:
+        orb_x = 41
+    if orb_y > 459:
+        orb_y = 459
+    if orb_y < 41:
+        orb_y = 41
 
     """ WRAP UP """
 
