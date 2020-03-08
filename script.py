@@ -1,4 +1,5 @@
-# Init
+""" INIT """
+
 import os, sys
 import pygame
 from pygame.locals import *
@@ -7,55 +8,105 @@ pygame.init()
 clock = pygame.time.Clock()
 FPS = 500
 
+""" SET UP """
+
 # Window
 win = pygame.display.set_mode((500, 500))
+pygame.display.set_caption("Flashtime!")
 
 # Variables
-rect1x = 50
-rect1y = 50
+rect1_x = 50
+rect1_y = 50
 
-rect2x = 110
-rect2y = 50
+rect2_x = 110
+rect2_y = 50
 
-# Main Loop
+""" MAIN LOOP """
+
 status = True
 while status:
     
+    """ SET UP """
+
     # FPS
     clock.tick(FPS)
 
+    # Basically, when you click `exit` it actually closes 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             status = False
 
+    # Key logger
     keys = pygame.key.get_pressed()
 
+    """ OBJECT CREATION """
+
+    # Removes remanants of drawings
+    win.fill((0, 0, 0))
+
+    # Draws a rectangle --> rect1
+    pygame.draw.rect(win, (255, 255, 255), (rect1_x, rect1_y, 50, 50))
+    
+    # Draws a 2nd rectangle --> rect2
+    pygame.draw.rect(win, (0, 225, 255), (rect2_x, rect2_y, 50, 50))
+
+    # Velocities for moving objects
     rect1Vel = 1
+    rect2Vel = 1
+
+    """ MOVEMENT """
+
+    # Keys for moving rectangle 1
 
     if keys[K_LEFT]:
-        rect1x -= rect1Vel
+        rect1_x -= rect1Vel
     if keys[K_RIGHT]:
-        rect1x += rect1Vel
+        rect1_x += rect1Vel
     if keys[K_DOWN]:
-        rect1y += rect1Vel
+        rect1_y += rect1Vel
     if keys[K_UP]:
-        rect1y -= rect1Vel
+        rect1_y -= rect1Vel
 
-    # Boundaries
+    # Keys for moving rectangle 2
 
-    if rect1x > 450:
-        rect1x = 450
-    if rect1y > 450:
-        rect1y = 450
-    if rect1x < 0:
-        rect1x = 0
-    if rect1y < 0:
-        rect1y = 0
+    if keys[K_w]:
+        rect2_y -= 1
+    if keys[K_a]:
+        rect2_x -= 1
+    if keys[K_s]:
+        rect2_y += 1
+    if keys[K_d]:
+        rect2_x += 1
 
-    win.fill((0, 0, 0))
-    pygame.draw.rect(win, (255, 255, 255), (rect1x, rect1y, 50, 50))
+    """ BOUNDARIES """
+
+    # Boundaries for rectangle 1
+
+    if rect1_x > 450:
+        rect1_x = 450
+    if rect1_y > 450:
+        rect1_y = 450
+    if rect1_x < 0:
+        rect1_x = 0
+    if rect1_y < 0:
+        rect1_y = 0
+
+    # Boundaries for rectangle 2
+
+    if rect2_x > 450:
+        rect2_x = 450
+    if rect2_y > 450:
+        rect2_y = 450
+    if rect2_x < 0:
+        rect2_x = 0
+    if rect2_y < 0:
+        rect2_y = 0
+
+    # Shows the drawings, after they are made3
     pygame.display.update()
 
-    print("(" + str(rect1x) + ", " + str(rect1y) + ")") # Shows coordinates of rect1
+    """ STATS """
+
+    print("(" + str(rect1_x) + ", " + str(rect1_y) + ")" + " " + "(" + str(rect2_x) + ", " + str(rect2_y) + ")") # Shows coordinates of rect1
 
 pygame.quit()
