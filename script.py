@@ -5,6 +5,7 @@ import pygame
 from pygame.locals import *
 
 pygame.init()
+pygame.font.init()
 
 clock = pygame.time.Clock()
 FPS = 400
@@ -15,6 +16,10 @@ FPS = 400
 win = pygame.display.set_mode((500, 500))
 pygame.display.set_caption("Flashtime!")
 
+# Text for countdown
+font = pygame.font.SysFont("arial", 15, bold = True)
+text = font.render("Hello, World", True, (0, 0, 0))
+
 """ VARIABLES """
 
 # Orb Position
@@ -23,7 +28,6 @@ orb_y = 250
 
 # Background Image
 bgImg = pygame.image.load("lib/img/background.png")
-
 
 """ FUNCTIONS """
 
@@ -62,6 +66,11 @@ while status:
 
     # Removes remanants of drawings
     win.blit(bgImg, (0, 0))
+    
+    # Countdown Timer
+    
+    win.blit(text, (460, 460) )
+    
     # win.fill((0, 0, 0)) # <-- Backup
  
     # Creats Blue Orb --> Main Player
@@ -104,5 +113,5 @@ while status:
     """ STATS """
 
     print("(" + str(orb_x) + ", " + str(orb_y) + ")") # Shows coordinates of the orb
-
+    
 pygame.quit()
